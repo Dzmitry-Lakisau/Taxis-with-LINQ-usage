@@ -42,13 +42,11 @@ namespace Taxis
 
                     Console.WriteLine("--------------------------------");
 
-                    var sedans = database.Sedans.Select(s => new { s.RegistrationNumber, s.Model, s.Cost, s.FuelEconomy, s.MaxSpeed, s.CountOfPlaces });// (from car in database.Sedans select (Car)car);
-                    var minivans = database.Minivans.Select(s => new { s.RegistrationNumber, s.Model, s.Cost, s.FuelEconomy, s.MaxSpeed, s.CountOfPlaces });// (from car in database.Minivans select (Car)car);
-                    var cars = (sedans.Union(minivans).OrderBy(car => car.FuelEconomy));
+                    var cars = database.Cars.OrderBy(car => car.FuelEconomy);
                     Console.WriteLine("Sorted by fuel economy:");
                     foreach (var car in cars)
                     {
-                        Console.WriteLine("{0} | {1} | {2} | {3} | {4} | {5}", car.RegistrationNumber, car.Model, car.Cost, car.FuelEconomy, car.MaxSpeed, car.CountOfPlaces);
+                        car.PrintToConsole();
                     }
 
                     Console.WriteLine("--------------------------------");
@@ -58,16 +56,16 @@ namespace Taxis
                     Console.WriteLine("Enter end of range speed");
                     double end = Convert.ToDouble(Console.ReadLine());
 
-                    sedans = database.Sedans.Select(s => new { s.RegistrationNumber, s.Model, s.Cost, s.FuelEconomy, s.MaxSpeed, s.CountOfPlaces }).
-                                Where(s => s.MaxSpeed > start && s.MaxSpeed < end);
-                    minivans = database.Minivans.Select(s => new { s.RegistrationNumber, s.Model, s.Cost, s.FuelEconomy, s.MaxSpeed, s.CountOfPlaces }).
-                                Where(s => s.MaxSpeed > start && s.MaxSpeed < end);
+                    var sedans = (from car in database.Sedans select (Car)car).
+                                Where(s => s.MaxSpeed >= start && s.MaxSpeed <= end);
+                    var minivans = (from car in database.Minivans select (Car)car).
+                                Where(s => s.MaxSpeed >= start && s.MaxSpeed < end);
                     var result = sedans.Union(minivans);
 
                     Console.WriteLine("Cars with MaxSpeed between {0} and {1}:", start, end);
                     foreach (var car in result)
                     {
-                        Console.WriteLine("{0} | {1} | {2} | {3} | {4} | {5}", car.RegistrationNumber, car.Model, car.Cost, car.FuelEconomy, car.MaxSpeed, car.CountOfPlaces);
+                        car.PrintToConsole();
                     }
                 }
                 catch (Exception e)

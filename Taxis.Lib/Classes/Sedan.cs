@@ -16,9 +16,9 @@ namespace Taxis.Lib.Classes
 
         private Sedan() { }
 
-        private ComfortType ComfortType { get; set; }
+        public ComfortType ComfortType { get; private set; }
 
-        public void PrintToConsole()
+        public override void PrintToConsole()
         {
             Console.WriteLine("{0} | {1} | {2} | {3} | {4} | {5} | {6}", RegistrationNumber, Model, Cost, FuelEconomy, MaxSpeed, CountOfPlaces, ComfortType);
         }

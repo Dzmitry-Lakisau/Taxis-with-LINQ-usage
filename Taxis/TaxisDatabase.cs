@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-//using System.Data.Linq;
-using System.Data.Entity;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using Taxis.Lib.Classes;
 
 namespace Taxis
@@ -14,23 +9,8 @@ namespace Taxis
             :base("DbConnection")
         { }
 
+        public DbSet<Car> Cars { get; set; }
         public DbSet<Sedan> Sedans { get; set; }
         public DbSet<Minivan> Minivans{ get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Sedan>()
-            .Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Sedans");
-            });
-            modelBuilder.Entity<Minivan>().Map(m =>
-            {
-                m.MapInheritedProperties();
-                m.ToTable("Minivans");
-            });
-        }
     }
-
 }

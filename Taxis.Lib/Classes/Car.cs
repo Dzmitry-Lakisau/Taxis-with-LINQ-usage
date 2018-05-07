@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Taxis.Lib.Classes
 {
-    public abstract class Car
+    public abstract class Car: Interfaces.Printable
     {
 
-        public Car(string registrationNumber, string model, int cost, double fuelEconomy, double maxSpeed, int countOfPlaces)
+        protected Car(string registrationNumber, string model, int cost, double fuelEconomy, double maxSpeed, int countOfPlaces)
         {
             RegistrationNumber = registrationNumber;
             Model = model;
@@ -34,5 +34,7 @@ namespace Taxis.Lib.Classes
         public double MaxSpeed { get; private set; }
 
         public int CountOfPlaces { get; private set; }
+
+        public abstract void PrintToConsole();
     }
 }
